@@ -8,11 +8,14 @@ class Hero(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
+    powers = db.relationship('Power', backref='hero', lazy=True)
+
 class Power(db.Model):
     __tablename__ = 'power'
 
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(255), nullable=False)
+    hero_id = db.Column(db.Integer, db.ForeignKey('hero.id'), nullable=False)
 
     @validates('description')
     def validate_description(self, key, value):
